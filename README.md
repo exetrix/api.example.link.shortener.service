@@ -1,3 +1,11 @@
+# Running the application
+** Docker compose is required to run the application **
+
+Within the project directory run:
+```shell
+docker-compose up -d
+```
+
 # Creating a shortened link
 ## Request
 ```shell

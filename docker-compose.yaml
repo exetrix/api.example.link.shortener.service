@@ -3,7 +3,7 @@ version: '2'
 services:
 
   service:
-    build: container/api
+    image: exetrix/link-shortener:latest
     ports:
       - 8080:8080
 

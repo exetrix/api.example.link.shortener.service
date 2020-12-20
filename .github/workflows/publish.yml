@@ -39,9 +39,8 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1.1.1
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: exetrix/com.cronofy.link.shortener.service/api
+          username: ${{ secrets.DOCKERHUBUSER }}
+          password: ${{ secrets.DOCKERHUBTOKEN }}
+          repository: exetrix/link-shortener
           tag_with_ref: true
           path: container/api

@@ -42,6 +42,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: exetrix/link-shortener/service
+          repository: exetrix/com.cronofy.link.shortener.service/api
           tag_with_ref: true
           path: container/api

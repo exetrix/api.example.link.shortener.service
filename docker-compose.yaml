@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+
+  service:
+    build: container/api
+    ports:
+      - 8080:8080
+
+  dynamodb:
+    image: amazon/dynamodb-local:1.13.5

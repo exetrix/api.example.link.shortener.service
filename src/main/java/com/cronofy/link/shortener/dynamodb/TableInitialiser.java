@@ -30,7 +30,10 @@ public class TableInitialiser implements CommandLineRunner {
                 .attributeName(FieldName.KEY)
                 .keyType(KeyType.HASH)
                 .build())
-            .provisionedThroughput(ProvisionedThroughput.builder().build())
+            .provisionedThroughput(ProvisionedThroughput.builder()
+                .readCapacityUnits(10L)
+                .writeCapacityUnits(10L)
+                .build())
             .tableName(dynamoDbProperties.getTableName())
             .build();
 

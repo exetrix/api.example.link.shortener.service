@@ -1,17 +1,20 @@
 package com.cronofy.link.shortener.controller;
 
+import com.cronofy.link.shortener.exception.RecordNotFoundException;
 import com.cronofy.link.shortener.link.dao.LinkDao;
 import com.cronofy.link.shortener.link.dto.Alias;
 import com.cronofy.link.shortener.link.dto.AliasFactory;
 import com.cronofy.link.shortener.link.dto.Target;
 import com.cronofy.link.shortener.utility.RandomStringGenerator;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RequestMapping("v1/api")
-@Controller
+@RestController
 public class ApiController {
 
     private RandomStringGenerator randomStringGenerator;
@@ -37,6 +40,19 @@ public class ApiController {
 
     @GetMapping("/{alias}")
     public Alias get(@PathVariable String alias, HttpServletRequest request) {
-        return aliasFactory.create(linkDao.get(alias), request);
+        try {
+            return aliasFactory.create(linkDao.get(alias), request);
+        } catch (RecordNotFoundException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to locate resource with id: " + alias, e);
+        }
+    }
+
+    @DeleteMapping("/{alias}")
+    public Alias delete(@PathVariable String alias, HttpServletRequest request) {
+        try {
+            return aliasFactory.create(linkDao.delete(alias), request);
+        } catch (RecordNotFoundException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to locate resource with id: " + alias, e);
+        }
     }
 }

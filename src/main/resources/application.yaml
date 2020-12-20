@@ -2,5 +2,5 @@ server:
   port: 8080
 dynamodb:
   region: eu-west-2
-  endpoint: http://localhost:8000
+  endpoint: http://dynamodb:8000
   tableName: link-shortener

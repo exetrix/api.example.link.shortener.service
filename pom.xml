@@ -69,4 +69,14 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<build>
+				<directory>container/api/resources/target</directory>
+				<finalName>app</finalName>
+			</build>
+		</profile>
+	</profiles>
+
 </project>

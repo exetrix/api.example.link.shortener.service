@@ -2,6 +2,7 @@ package com.cronofy.link.shortener.link.dao;
 
 import com.cronofy.link.shortener.dynamodb.DynamoDbHelper;
 import com.cronofy.link.shortener.dynamodb.FieldName;
+import com.cronofy.link.shortener.exception.RecordNotFoundException;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
@@ -30,7 +31,7 @@ public class LinkDao {
         item.put(FieldName.KEY, dynamoDbHelper.createStringAttribute(alias));
         item.put(FieldName.target, dynamoDbHelper.createStringAttribute(targetString));
 
-        dynamoDbHelper.createPutItemRequest(item);
+        dynamoDbClient.putItem(dynamoDbHelper.createPutItemRequest(item));
 
         return linkRecordFactory.create(alias, targetString);
     }
@@ -43,6 +44,11 @@ public class LinkDao {
 
     public LinkRecord get(String alias) {
         GetItemResponse response = dynamoDbClient.getItem(dynamoDbHelper.createGetItemRequest(alias));
+
+        if (!response.hasItem()) {
+            throw new RecordNotFoundException();
+        }
+
         Map<String, AttributeValue> item = response.item();
 
         return linkRecordFactory.create(
